@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 
 class RM_Widget_Busca extends Widget_Base {
 
+<<<<<<< HEAD
     protected function register_controls() {
 
         // LAYOUT
@@ -51,6 +52,8 @@ class RM_Widget_Busca extends Widget_Base {
         $this->end_controls_section();
     }
 
+=======
+>>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     public function get_name() {
         return 'rm_busca';
     }
@@ -75,5 +78,9 @@ class RM_Widget_Busca extends Widget_Base {
         </div>
         ';
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> d5ae31fde395fecd55b176c5367858ed25209432

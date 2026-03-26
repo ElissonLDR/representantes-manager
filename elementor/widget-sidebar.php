@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 
 class RM_Widget_Sidebar extends Widget_Base {
 
+<<<<<<< HEAD
     protected function register_controls() {
 
         // LAYOUT
@@ -51,6 +52,8 @@ class RM_Widget_Sidebar extends Widget_Base {
         $this->end_controls_section();
     }
 
+=======
+>>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     public function get_name() {
         return 'rm_sidebar';
     }
@@ -86,10 +89,13 @@ class RM_Widget_Sidebar extends Widget_Base {
 
         echo '<div class="rm-sidebar">';
 
+<<<<<<< HEAD
         echo '<div class="rm-sidebar-item active" data-id="all">';
         echo '<span class="rm-cidade">Todos</span>';
         echo '</div>';
 
+=======
+>>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
         foreach ($cidades as $cidade) {
 
             echo '<div class="rm-sidebar-item" data-id="' . esc_attr($cidade->id) . '">';
@@ -100,5 +106,9 @@ class RM_Widget_Sidebar extends Widget_Base {
 
         echo '</div>';
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
