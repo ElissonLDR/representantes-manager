@@ -7,7 +7,10 @@ class RM_Widget_Sidebar extends Widget_Base {
 
     protected function register_controls() {
 
-        // LAYOUT
+        /* ======================================================
+        =============== CONTEÚDO - LAYOUT =======================
+        ====================================================== */
+    
         $this->start_controls_section(
             'section_layout',
             [
@@ -16,37 +19,246 @@ class RM_Widget_Sidebar extends Widget_Base {
             ]
         );
     
+        // Mostrar contador
+        $this->add_control(
+            'show_total',
+            [
+                'label' => 'Mostrar contador',
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => 'Sim',
+                'label_off' => 'Não',
+                'default' => 'yes',
+            ]
+        );
+    
+        // Mostrar "Todos"
+        $this->add_control(
+            'show_all',
+            [
+                'label' => 'Mostrar opção "Todos"',
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'default' => 'yes',
+            ]
+        );
+    
+        // Texto "Todos"
+        $this->add_control(
+            'text_all',
+            [
+                'label' => 'Texto do "Todos"',
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => 'Todos',
+                'condition' => [
+                    'show_all' => 'yes'
+                ]
+            ]
+        );
+    
         $this->end_controls_section();
     
-        // ESTILO
+    
+        /* ======================================================
+        =============== ESTILO - CONTAINER ======================
+        ====================================================== */
+    
         $this->start_controls_section(
-            'section_style',
+            'section_container',
             [
-                'label' => 'Estilo',
+                'label' => 'Container',
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
     
-        // TIPOGRAFIA
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+        $this->add_control(
+            'bg_container',
             [
-                'name' => 'text_typography',
-                'selector' => '{{WRAPPER}}',
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar' => 'background: {{VALUE}};'
+                ],
             ]
         );
     
-        // COR TEXTO
+        $this->add_responsive_control(
+            'padding_container',
+            [
+                'label' => 'Padding',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                ],
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'border_container',
+                'selector' => '{{WRAPPER}} .rm-sidebar',
+            ]
+        );
+    
+        $this->add_responsive_control(
+            'radius_container',
+            [
+                'label' => 'Border Radius',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - ITENS ==========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_items',
+            [
+                'label' => 'Itens',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        // Tipografia
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'item_typography',
+                'selector' => '{{WRAPPER}} .rm-sidebar-item',
+            ]
+        );
+    
+        // Espaçamento
+        $this->add_responsive_control(
+            'item_padding',
+            [
+                'label' => 'Padding',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+                ],
+            ]
+        );
+    
+        $this->add_responsive_control(
+            'item_gap',
+            [
+                'label' => 'Espaçamento entre itens',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+                ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - ESTADOS ========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_states',
+            [
+                'label' => 'Estados (Normal / Hover / Ativo)',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        // ABAS (Normal / Hover / Active)
+        $this->start_controls_tabs('tabs_states');
+    
+        /* -------- NORMAL -------- */
+        $this->start_controls_tab('tab_normal', ['label' => 'Normal']);
+    
         $this->add_control(
-            'text_color',
+            'color_normal',
             [
                 'label' => 'Cor do texto',
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}}' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-sidebar-item' => 'color: {{VALUE}};',
                 ],
             ]
         );
+    
+        $this->add_control(
+            'bg_normal',
+            [
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item' => 'background: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_tab();
+    
+    
+        /* -------- HOVER -------- */
+        $this->start_controls_tab('tab_hover', ['label' => 'Hover']);
+    
+        $this->add_control(
+            'color_hover',
+            [
+                'label' => 'Cor',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->add_control(
+            'bg_hover',
+            [
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item:hover' => 'background: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_tab();
+    
+    
+        /* -------- ACTIVE -------- */
+        $this->start_controls_tab('tab_active', ['label' => 'Ativo']);
+    
+        $this->add_control(
+            'color_active',
+            [
+                'label' => 'Cor',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item.active' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->add_control(
+            'bg_active',
+            [
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item.active' => 'background: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_tab();
+    
+        $this->end_controls_tabs();
     
         $this->end_controls_section();
     }
@@ -69,6 +281,8 @@ class RM_Widget_Sidebar extends Widget_Base {
 
     protected function render() {
 
+        $settings = $this->get_settings_for_display();
+
         global $wpdb;
 
         $cidades_table = $wpdb->prefix . 'rm_cidades';
@@ -86,15 +300,19 @@ class RM_Widget_Sidebar extends Widget_Base {
 
         echo '<div class="rm-sidebar">';
 
-        echo '<div class="rm-sidebar-item active" data-id="all">';
-        echo '<span class="rm-cidade">Todos</span>';
-        echo '</div>';
+        if (!empty($settings['show_all']) && $settings['show_all'] === 'yes') {
+            echo '<div class="rm-sidebar-item active" data-id="all">';
+            echo '<span class="rm-cidade">' . esc_html($settings['text_all']) . '</span>';
+            echo '</div>';
+        }
 
         foreach ($cidades as $cidade) {
 
             echo '<div class="rm-sidebar-item" data-id="' . esc_attr($cidade->id) . '">';
             echo '<span class="rm-cidade">' . esc_html($cidade->nome) . '</span>';
-            echo '<span class="rm-total">' . intval($cidade->total) . '</span>';
+            if (!empty($settings['show_total']) && $settings['show_total'] === 'yes') {
+                echo '<span class="rm-total">' . intval($cidade->total) . '</span>';
+            }
             echo '</div>';
         }
 

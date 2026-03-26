@@ -8,15 +8,38 @@ document.addEventListener('DOMContentLoaded', function () {
     if (input) {
         input.addEventListener('keyup', function () {
 
-            const value = this.value.toLowerCase();
+            const value = input.value.toLowerCase();
 
             cards.forEach(card => {
 
                 const nome = card.querySelector('h3')?.innerText.toLowerCase() || '';
-                const cidades = card.getAttribute('data-cidades')?.toLowerCase() || '';
+                const cidadesTexto = card.querySelector('.rm-cidades')?.innerText.toLowerCase() || '';
 
-                card.style.display = (nome.includes(value) || cidades.includes(value)) ? 'block' : 'none';
+                const telefones = [...card.querySelectorAll('.rm-telefone')]
+                .map(t => t.innerText.toLowerCase())
+                .join(' ');
+            
+                const match =
+                    nome.includes(value) ||
+                    cidadesTexto.includes(value) ||
+                    telefones.includes(value);
+                
+                card.style.display = match ? 'block' : 'none';
             });
+
+            const visibleCards = [...cards].filter(card => card.style.display !== 'none');
+
+            const titulo = document.querySelector('.rm-titulo');
+            const qtd = document.querySelector('.rm-quantidade');
+            
+            if (value.length > 0) {
+                titulo.innerText = `Representantes encontrados para "${value}"`;
+            } else {
+                const active = document.querySelector('.rm-sidebar-item.active .rm-cidade');
+                titulo.innerText = active ? active.innerText : 'Todos';
+            }
+            
+            qtd.innerText = `(${visibleCards.length})`;
         });
     }
 
@@ -47,7 +70,6 @@ document.addEventListener("click", function(e){
 
         if(id === "all"){
             document.querySelectorAll(".rm-card").forEach(c => c.style.display = "block");
-            return;
         }
 
         document.querySelectorAll(".rm-card").forEach(card => {
@@ -59,6 +81,17 @@ document.addEventListener("click", function(e){
                 card.style.display = "none";
             }
         });
+
+        const titulo = document.querySelector('.rm-titulo');
+        const qtd = document.querySelector('.rm-quantidade');
+        
+        const visiveis = [...document.querySelectorAll('.rm-card')]
+            .filter(c => c.style.display !== 'none');
+        
+        const cidadeNome = item.querySelector('.rm-cidade').innerText;
+        
+        titulo.innerText = cidadeNome;
+        qtd.innerText = `(${visiveis.length})`;
     }
 
 });

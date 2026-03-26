@@ -7,7 +7,10 @@ class RM_Widget_Cards extends Widget_Base {
 
     protected function register_controls() {
 
-        // LAYOUT
+        /* ======================================================
+        =============== CONTEÚDO - LAYOUT =======================
+        ====================================================== */
+    
         $this->start_controls_section(
             'section_layout',
             [
@@ -16,35 +19,299 @@ class RM_Widget_Cards extends Widget_Base {
             ]
         );
     
+        // Colunas
+        $this->add_responsive_control(
+            'columns',
+            [
+                'label' => 'Colunas',
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => '3',
+                'options' => [
+                    '1' => '1 Coluna',
+                    '2' => '2 Colunas',
+                    '3' => '3 Colunas',
+                    '4' => '4 Colunas',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cards' => 'display:grid; grid-template-columns: repeat({{VALUE}}, 1fr);'
+                ]
+            ]
+        );
+    
+        // Gap
+        $this->add_responsive_control(
+            'gap',
+            [
+                'label' => 'Espaçamento entre cards',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cards' => 'gap: {{SIZE}}{{UNIT}};'
+                ]
+            ]
+        );
+    
+        // Mostrar elementos
+        $this->add_control('show_nome', [
+            'label' => 'Mostrar nome',
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'default' => 'yes',
+        ]);
+    
+        $this->add_control('show_cidades', [
+            'label' => 'Mostrar cidades',
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'default' => 'yes',
+        ]);
+    
+        $this->add_control('show_telefones', [
+            'label' => 'Mostrar telefones',
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'default' => 'yes',
+        ]);
+    
+        $this->add_control('show_botao', [
+            'label' => 'Mostrar botão',
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'default' => 'yes',
+        ]);
+    
         $this->end_controls_section();
     
-        // ESTILO
+    
+        /* ======================================================
+        =============== ESTILO - CARD ===========================
+        ====================================================== */
+    
         $this->start_controls_section(
-            'section_style',
+            'section_card',
             [
-                'label' => 'Estilo',
+                'label' => 'Card',
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
     
-        // TIPOGRAFIA
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+        $this->add_control(
+            'bg_card',
             [
-                'name' => 'text_typography',
-                'selector' => '{{WRAPPER}}',
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-card' => 'background: {{VALUE}};',
+                ],
             ]
         );
     
-        // COR TEXTO
-        $this->add_control(
-            'text_color',
+        $this->add_responsive_control(
+            'padding_card',
             [
-                'label' => 'Cor do texto',
+                'label' => 'Padding',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+    
+        $this->add_responsive_control(
+            'radius_card',
+            [
+                'label' => 'Border Radius',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'shadow_card',
+                'selector' => '{{WRAPPER}} .rm-card',
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - NOME ===========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_nome',
+            [
+                'label' => 'Nome',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'nome_typo',
+                'selector' => '{{WRAPPER}} .rm-nome',
+            ]
+        );
+    
+        $this->add_control(
+            'nome_color',
+            [
+                'label' => 'Cor',
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}}' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-nome' => 'color: {{VALUE}};',
                 ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - CIDADES ========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_cidades',
+            [
+                'label' => 'Cidades',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'cidades_typo',
+                'selector' => '{{WRAPPER}} .rm-cidades',
+            ]
+        );
+    
+        $this->add_control(
+            'cidades_color',
+            [
+                'label' => 'Cor',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cidades' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - TELEFONES ======================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_telefones',
+            [
+                'label' => 'Telefones',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'tel_typo',
+                'selector' => '{{WRAPPER}} .rm-telefone',
+            ]
+        );
+    
+        $this->add_control(
+            'tel_color',
+            [
+                'label' => 'Cor',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-telefone' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTILO - BOTÃO ==========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_botao',
+            [
+                'label' => 'Botão',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        $this->add_control(
+            'btn_bg',
+            [
+                'label' => 'Background',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-ver-cidades' => 'background: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->add_control(
+            'btn_color',
+            [
+                'label' => 'Cor do ícone',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-ver-cidades' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->add_responsive_control(
+            'btn_radius',
+            [
+                'label' => 'Border Radius',
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-ver-cidades' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+    
+        $this->end_controls_section();
+    
+    
+        /* ======================================================
+        =============== ESTADOS (HOVER) =========================
+        ====================================================== */
+    
+        $this->start_controls_section(
+            'section_hover',
+            [
+                'label' => 'Hover',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+    
+        $this->add_control(
+            'hover_bg',
+            [
+                'label' => 'Background Hover',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-card:hover' => 'background: {{VALUE}};',
+                ],
+            ]
+        );
+    
+        $this->add_group_control(
+            \Elementor\Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'hover_shadow',
+                'selector' => '{{WRAPPER}} .rm-card:hover',
             ]
         );
     
@@ -69,6 +336,8 @@ class RM_Widget_Cards extends Widget_Base {
 
     protected function render() {
 
+        $settings = $this->get_settings_for_display();
+
         global $wpdb;
 
         $rep_table = $wpdb->prefix . 'rm_representantes';
@@ -83,6 +352,11 @@ class RM_Widget_Cards extends Widget_Base {
 
         if (!$representantes) return;
 
+        echo '<div class="rm-header">';
+        echo '<h2 class="rm-titulo">Todos</h2>';
+        echo '<span class="rm-quantidade"></span>';
+        echo '</div>';
+        
         echo '<div class="rm-cards">';
 
         foreach ($representantes as $rep) {
@@ -100,22 +374,30 @@ class RM_Widget_Cards extends Widget_Base {
 
             echo '<div class="rm-card" data-cidades="' . esc_attr(implode(',', $cidades_ids)) . '">';
             
-            echo '<h3 class="rm-nome">' . esc_html($rep->nome) . '</h3>';
+            if (!empty($settings['show_nome']) && $settings['show_nome'] === 'yes') {
+                echo '<h3 class="rm-nome">' . esc_html($rep->nome) . '</h3>';
+            }
 
-            echo '<p class="rm-cidades">' . esc_html(implode(', ', $cidades_nomes)) . '</p>';
+            echo '<p class="rm-cidades" style="display:' . 
+            (!empty($settings['show_cidades']) && $settings['show_cidades'] === 'yes' ? 'block' : 'none') 
+        . '">' . esc_html(implode(', ', $cidades_nomes)) . '</p>';
 
             $telefones = $wpdb->get_col($wpdb->prepare(
                 "SELECT telefone FROM {$wpdb->prefix}rm_telefones WHERE representante_id = %d",
                 $rep->id
             ));
             
-            if ($telefones) {
-                foreach ($telefones as $tel) {
-                    echo '<span class="rm-telefone">' . esc_html($tel) . '</span><br>';
+            if (!empty($settings['show_telefones']) && $settings['show_telefones'] === 'yes') {
+                if ($telefones) {
+                    foreach ($telefones as $tel) {
+                        echo '<span class="rm-telefone">' . esc_html($tel) . '</span><br>';
+                    }
                 }
             }
 
-            echo '<button class="rm-ver-cidades" data-id="'.$rep->id.'">🔍</button>';
+            if (!empty($settings['show_botao']) && $settings['show_botao'] === 'yes') {
+                echo '<button class="rm-ver-cidades" data-id="'.$rep->id.'">🔍</button>';
+            }
 
             echo '</div>';
 
