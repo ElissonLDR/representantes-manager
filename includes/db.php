@@ -11,12 +11,8 @@ function rm_get_table($table) {
     $map = [
         'cidades' => $wpdb->prefix . 'rm_cidades',
         'representantes' => $wpdb->prefix . 'rm_representantes',
-<<<<<<< HEAD
         'rel' => $wpdb->prefix . 'rm_representantes_cidades',
         'telefones' => $wpdb->prefix . 'rm_telefones'
-=======
-        'rel' => $wpdb->prefix . 'rm_representantes_cidades'
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     ];
 
     return $map[$table] ?? null;

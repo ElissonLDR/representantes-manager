@@ -22,7 +22,6 @@ function rm_register_elementor_widgets($widgets_manager) {
     } catch (Throwable $e) {
         error_log('RM Elementor Error: ' . $e->getMessage());
     }
-<<<<<<< HEAD
 }
 
 add_action('elementor/frontend/after_enqueue_styles', function(){
@@ -32,7 +31,3 @@ add_action('elementor/frontend/after_enqueue_styles', function(){
 add_action('elementor/frontend/after_enqueue_scripts', function(){
     wp_enqueue_script('rm-script', RM_URL . 'assets/js/script.js', [], RM_VERSION, true);
 });
-
-=======
-}
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432

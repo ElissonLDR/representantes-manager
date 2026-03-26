@@ -11,7 +11,6 @@ function rm_render_cidades_page() {
     $table = rm_get_table('cidades');
     $rel_table = rm_get_table('rel');
 
-<<<<<<< HEAD
     $edit = null;
 
     // BUSCA
@@ -61,28 +60,18 @@ function rm_render_cidades_page() {
 
         echo '<script>window.location.href="' . admin_url('admin.php?page=rm-cidades') . '";</script>';
         exit;
-=======
-    // RESET (NOVO)
-    if (isset($_GET['novo'])) {
-        $edit = null;
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     }
 
     // CREATE / UPDATE
     if (isset($_POST['rm_save_cidade']) && check_admin_referer('rm_cidade_nonce')) {
 
         $id = intval($_POST['id'] ?? 0);
-<<<<<<< HEAD
         $nome = sanitize_text_field($_POST['nome'] ?? '');
         $estado = rm_sanitize_text($_POST['estado'] ?? '');
-=======
-        $nome = rm_sanitize_text($_POST['nome'] ?? '');
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
 
         if ($nome) {
 
             if ($id > 0) {
-<<<<<<< HEAD
                 $wpdb->update($table, [
                     'nome' => $nome,
                     'estado' => $estado ?: 'RS'
@@ -101,16 +90,6 @@ function rm_render_cidades_page() {
     }
 
     // DELETE
-=======
-                $wpdb->update($table, ['nome' => $nome], ['id' => $id]);
-            } else {
-                $wpdb->insert($table, ['nome' => $nome]);
-            }
-        }
-    }
-
-    // DELETE (com nonce)
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     if (isset($_GET['delete']) && isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'rm_delete_cidade')) {
 
         $id = intval($_GET['delete']);
@@ -123,25 +102,17 @@ function rm_render_cidades_page() {
         if ($count == 0) {
             $wpdb->delete($table, ['id' => $id]);
         }
-<<<<<<< HEAD
 
         echo '<script>window.location.href="' . admin_url('admin.php?page=rm-cidades') . '";</script>';
         exit;
     }
 
     // EDIT MODE
-=======
-    }
-
-    // EDIT MODE
-    $edit = null;
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     if (isset($_GET['edit'])) {
         $edit_id = intval($_GET['edit']);
         $edit = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE id = %d", $edit_id));
     }
 
-<<<<<<< HEAD
     // PAGINAÇÃO
     $per_page = intval($_GET['per_page'] ?? 25);
     if (!in_array($per_page, [25, 50, 100,500])) $per_page = 25;
@@ -194,39 +165,20 @@ function rm_render_cidades_page() {
     echo '<div style="' . $box_style . 'padding:15px;">';
     echo '<h3>' . ($edit ? 'Editando Cidade' : 'Adicionar Cidade') . '</h3>';
 
-=======
-    $cidades = $wpdb->get_results("SELECT * FROM $table ORDER BY id ASC");
-
-    echo '<div class="wrap"><h1>Cidades</h1>';
-
-    echo '<a href="?page=rm-cidades&novo=1" class="button">Novo</a>';
-
-    echo '<div style="display:flex;gap:20px;margin-top:15px;">';
-
-    // FORM (ESQUERDA)
-    echo '<div style="width:300px;">';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     echo '<form method="POST">';
     wp_nonce_field('rm_cidade_nonce');
 
     echo '<input type="hidden" name="id" value="' . esc_attr($edit->id ?? '') . '">';
-<<<<<<< HEAD
 
     echo '<input type="text" name="nome" placeholder="Cidade" value="' . esc_attr($edit->nome ?? '') . '" required style="width:100%;margin-bottom:10px;">';
 
     echo '<input type="text" name="estado" placeholder="Estado (RS)" value="' . esc_attr($edit->estado ?? '') . '" style="width:100%;margin-bottom:10px;">';
 
     echo '<button type="submit" name="rm_save_cidade" class="button button-primary" style="width:100%;">' . ($edit ? 'Atualizar' : 'Adicionar') . '</button>';
-=======
-    echo '<input type="text" name="nome" placeholder="Nome da cidade" value="' . esc_attr($edit->nome ?? '') . '" required style="width:100%;margin-bottom:10px;">';
-
-    echo '<button type="submit" name="rm_save_cidade" class="button button-primary">Salvar</button>';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
 
     echo '</form>';
     echo '</div>';
 
-<<<<<<< HEAD
     echo '<div style="background:#fff;padding:15px;border:1px solid #ddd;">';
     echo '<h3>Adicionar várias cidades</h3>';
 
@@ -266,12 +218,6 @@ Cidade 2 - RS" style="width:100%;height:120px;"></textarea>';
 
     echo '<table class="widefat striped">';
     echo '<thead><tr><th>Cidade</th><th>Estado</th><th>Ações</th></tr></thead><tbody>';
-=======
-    // LISTA (DIREITA)
-    echo '<div style="flex:1;">';
-    echo '<table class="widefat">';
-    echo '<thead><tr><th>ID</th><th>Nome</th><th>Ações</th></tr></thead><tbody>';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
 
     foreach ($cidades as $cidade) {
 
@@ -283,13 +229,8 @@ Cidade 2 - RS" style="width:100%;height:120px;"></textarea>';
         );
 
         echo '<tr>';
-<<<<<<< HEAD
         echo '<td>' . esc_html($cidade->nome) . '</td>';
         echo '<td>' . esc_html($cidade->estado) . '</td>';
-=======
-        echo '<td>' . $cidade->id . '</td>';
-        echo '<td>' . esc_html($cidade->nome) . '</td>';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
         echo '<td>';
         echo '<a href="' . esc_url($edit_url) . '">Editar</a> | ';
         echo '<a href="' . esc_url($delete_url) . '" onclick="return confirm(\'Tem certeza?\')">Excluir</a>';
@@ -298,7 +239,6 @@ Cidade 2 - RS" style="width:100%;height:120px;"></textarea>';
     }
 
     echo '</tbody></table>';
-<<<<<<< HEAD
 
     // 🔥 PAGINAÇÃO AQUI
     echo '<div style="margin-top:15px;display:flex;gap:5px;flex-wrap:wrap;">';
@@ -350,9 +290,4 @@ Cidade 2 - RS" style="width:100%;height:120px;"></textarea>';
     })();
     </script>
     ';
-=======
-    echo '</div>';
-
-    echo '</div></div>';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
 }

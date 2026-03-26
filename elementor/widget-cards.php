@@ -5,7 +5,6 @@ use Elementor\Widget_Base;
 
 class RM_Widget_Cards extends Widget_Base {
 
-<<<<<<< HEAD
     protected function register_controls() {
 
         // LAYOUT
@@ -52,8 +51,6 @@ class RM_Widget_Cards extends Widget_Base {
         $this->end_controls_section();
     }
 
-=======
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
     public function get_name() {
         return 'rm_cards';
     }
@@ -90,19 +87,13 @@ class RM_Widget_Cards extends Widget_Base {
 
         foreach ($representantes as $rep) {
 
-<<<<<<< HEAD
             $cidades = $wpdb->get_results($wpdb->prepare(
                 "SELECT c.id, c.nome 
-=======
-            $cidades = $wpdb->get_col($wpdb->prepare(
-                "SELECT c.nome 
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
                  FROM $rel_table rc
                  JOIN $cidades_table c ON c.id = rc.cidade_id
                  WHERE rc.representante_id = %d",
                 $rep->id
             ));
-<<<<<<< HEAD
             
             $cidades_nomes = array_column($cidades, 'nome');
             $cidades_ids = array_column($cidades, 'id');
@@ -136,27 +127,9 @@ class RM_Widget_Cards extends Widget_Base {
                 </div>
             </div>
             ';
-=======
-
-            echo '<div class="rm-card" data-cidades="' . esc_attr(implode(',', $cidades)) . '">';
-            
-            echo '<h3>' . esc_html($rep->nome) . '</h3>';
-
-            echo '<p class="rm-cidades">' . esc_html(implode(', ', $cidades)) . '</p>';
-
-            if (!empty($rep->telefone)) {
-                echo '<a href="tel:' . esc_attr($rep->telefone) . '" class="rm-btn">Contato</a>';
-            }
-
-            echo '</div>';
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
         }
 
         echo '</div>';
     }
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432

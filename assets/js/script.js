@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-<<<<<<< HEAD
 });
 
 document.addEventListener("click", function(e){
@@ -61,22 +60,5 @@ document.addEventListener("click", function(e){
             }
         });
     }
-=======
-    // CLICK SIDEBAR (filtro por cidade)
-    sidebarItems.forEach(item => {
-
-        item.addEventListener('click', function () {
-
-            const cidade = this.querySelector('.rm-cidade').innerText.toLowerCase();
-
-            cards.forEach(card => {
-
-                const cidades = card.getAttribute('data-cidades')?.toLowerCase() || '';
-
-                card.style.display = cidades.includes(cidade) ? 'block' : 'none';
-            });
-        });
-    });
->>>>>>> d5ae31fde395fecd55b176c5367858ed25209432
 
 });
