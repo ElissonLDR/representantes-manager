@@ -50,10 +50,10 @@ document.addEventListener("click", function(e){
     // MODAL
     if(e.target.classList.contains("rm-ver-cidades")){
         const card = e.target.closest(".rm-card");
-        const cidades = card.dataset.cidades.split(',');
-
-        document.getElementById("rm-modal-cidades").innerText = cidades;
-        document.getElementById("rm-modal").style.display = "block";
+        const nome = card.querySelector('.rm-nome')?.innerText || '';
+        const cidades = card.querySelector('.rm-cidades')?.innerText || '';
+        document.getElementById("rm-modal-cidades").innerHTML = `<h3 class="rm-nome">${nome}</h3><p class="rm-modal-subtitulo">Cidades atendidas:</p>${cidades}`;
+        document.getElementById("rm-modal").style.display = "flex";
     }
 
     if(e.target.classList.contains("rm-close")){

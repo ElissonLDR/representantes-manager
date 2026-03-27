@@ -394,14 +394,14 @@ class RM_Widget_Cards extends Widget_Base {
         foreach ($representantes as $rep) {
 
             $cidades = $wpdb->get_results($wpdb->prepare(
-                "SELECT c.id, c.nome 
+                "SELECT c.id, c.nome, c.estado
                  FROM $rel_table rc
                  JOIN $cidades_table c ON c.id = rc.cidade_id
                  WHERE rc.representante_id = %d",
                 $rep->id
             ));
             
-            $cidades_nomes = array_column($cidades, 'nome');
+            $cidades_nomes = array_map(fn($c) => $c->nome . ' - ' . $c->estado, $cidades);
             $cidades_ids = array_column($cidades, 'id');
 
             echo '<div class="rm-card" data-cidades="' . esc_attr(implode(',', $cidades_ids)) . '">';
@@ -411,8 +411,7 @@ class RM_Widget_Cards extends Widget_Base {
             }
 
             echo '<p class="rm-cidades" style="display:' . 
-            (!empty($settings['show_cidades']) && $settings['show_cidades'] === 'yes' ? 'block' : 'none') 
-        . '">' . esc_html(implode(', ', $cidades_nomes)) . '</p>';
+            (!empty($settings['show_cidades']) && $settings['show_cidades'] === 'yes' ? 'block' : 'none') . '">' . esc_html(implode(', ', $cidades_nomes)) . '</p>';
 
             $telefones = $wpdb->get_col($wpdb->prepare(
                 "SELECT telefone FROM {$wpdb->prefix}rm_telefones WHERE representante_id = %d",
@@ -428,21 +427,23 @@ class RM_Widget_Cards extends Widget_Base {
             }
 
             if (!empty($settings['show_botao']) && $settings['show_botao'] === 'yes') {
-                echo '<button class="rm-ver-cidades" data-id="'.$rep->id.'">🔍</button>';
+                echo '<button class="rm-ver-cidades" data-id="'.$rep->id.'">Ver todas cidades</button>';
             }
-
+            
             echo '</div>';
 
-            echo '
-            <div id="rm-modal" style="display:none;">
-                <div class="rm-modal-content">
-                    <span class="rm-close">×</span>
-                    <div id="rm-modal-cidades"></div>
-                </div>
-            </div>
-            ';
         }
 
         echo '</div>';
+
+        echo '
+        <div id="rm-modal" style="display:none;">
+            <div class="rm-modal-content">
+                <span class="rm-close">×</span>
+                <div id="rm-modal-cidades"></div>
+            </div>
+        </div>
+        ';
+
     }
 }
