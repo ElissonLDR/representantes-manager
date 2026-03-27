@@ -124,6 +124,11 @@ class RM_Widget_Sidebar extends Widget_Base {
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
+
+        $this->add_control('icon_sidebar-item', [
+            'label' => 'Ícone das sidebar-item',
+            'type' => \Elementor\Controls_Manager::ICONS,
+        ]);
     
         // Tipografia
         $this->add_group_control(
@@ -153,6 +158,41 @@ class RM_Widget_Sidebar extends Widget_Base {
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .rm-sidebar-item' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_sidebar-item_color',
+            [
+                'label' => 'Cor do Ícone',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-sidebar-item svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'icon_sidebar-item_size',
+            [
+                'label' => 'Tamanho do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .rm-sidebar-item svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_sidebar-item_spacing',
+            [
+                'label' => 'Espaçamento do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-sidebar-item i, {{WRAPPER}} .rm-sidebar-item svg' => 'margin-right: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -212,7 +252,7 @@ class RM_Widget_Sidebar extends Widget_Base {
                 'label' => 'Cor',
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .rm-sidebar-item:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-sidebar-item:hover, {{WRAPPER}} .rm-sidebar-item:hover i, {{WRAPPER}} .rm-sidebar-item:hover svg, {{WRAPPER}} .rm-sidebar-item:hover svg path' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -240,7 +280,7 @@ class RM_Widget_Sidebar extends Widget_Base {
                 'label' => 'Cor',
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .rm-sidebar-item.active' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-sidebar-item.active, {{WRAPPER}} .rm-sidebar-item.active i, {{WRAPPER}} .rm-sidebar-item.active svg, {{WRAPPER}} .rm-sidebar-item.active svg path' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -310,7 +350,9 @@ class RM_Widget_Sidebar extends Widget_Base {
 
             echo '<div class="rm-sidebar-item" data-id="' . esc_attr($cidade->id) . '">';
             echo '<div class="rm-sidebar-cidade-estado" style="display:flex;">';
-            echo '<span class="rm-cidade">' . esc_html($cidade->nome) . '- </span>';
+            echo '<span class="rm-cidade">';
+            \Elementor\Icons_Manager::render_icon($settings['icon_sidebar-item'], ['aria-hidden' => 'true']);
+            echo esc_html($cidade->nome) . ' - </span>';
             echo '<span class="rm-estado">' . esc_html($cidade->estado) . '</span>';
             echo '</div>';
             if (!empty($settings['show_total']) && $settings['show_total'] === 'yes') {

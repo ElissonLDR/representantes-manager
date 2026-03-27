@@ -56,17 +56,32 @@ class RM_Widget_Cards extends Widget_Base {
             'type' => \Elementor\Controls_Manager::SWITCHER,
             'default' => 'yes',
         ]);
+
+        $this->add_control('icon_nome', [
+            'label' => 'Ícone do Nome',
+            'type' => \Elementor\Controls_Manager::ICONS,
+        ]);
     
         $this->add_control('show_cidades', [
             'label' => 'Mostrar cidades',
             'type' => \Elementor\Controls_Manager::SWITCHER,
             'default' => 'yes',
         ]);
-    
+        
+        $this->add_control('icon_cidades', [
+            'label' => 'Ícone das Cidades',
+            'type' => \Elementor\Controls_Manager::ICONS,
+        ]);
+        
         $this->add_control('show_telefones', [
             'label' => 'Mostrar telefones',
             'type' => \Elementor\Controls_Manager::SWITCHER,
             'default' => 'yes',
+        ]);
+
+        $this->add_control('icon_telefone', [
+            'label' => 'Ícone do Telefone',
+            'type' => \Elementor\Controls_Manager::ICONS,
         ]);
     
         $this->add_control('show_botao', [
@@ -211,7 +226,7 @@ class RM_Widget_Cards extends Widget_Base {
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
-    
+
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
@@ -227,6 +242,41 @@ class RM_Widget_Cards extends Widget_Base {
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .rm-cidades' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_cidades_color',
+            [
+                'label' => 'Cor do Ícone',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cidades i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-cidades svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'icon_cidades_size',
+            [
+                'label' => 'Tamanho do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cidades i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .rm-cidades svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_cidades_spacing',
+            [
+                'label' => 'Espaçamento do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-cidades i, {{WRAPPER}} .rm-cidades svg' => 'margin-right: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -261,6 +311,41 @@ class RM_Widget_Cards extends Widget_Base {
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .rm-telefone' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_telefone_color',
+            [
+                'label' => 'Cor do Ícone',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-telefone i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .rm-telefone svg' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'icon_telefone_size',
+            [
+                'label' => 'Tamanho do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-telefone i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .rm-telefone svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_telefone_spacing',
+            [
+                'label' => 'Espaçamento do Ícone',
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-telefone i, {{WRAPPER}} .rm-telefone svg' => 'margin-right: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -385,7 +470,9 @@ class RM_Widget_Cards extends Widget_Base {
         if (!$representantes) return;
 
         echo '<div class="rm-header" style="display:flex;align-items:center;gap:16px">';
-        echo '<h2 class="rm-titulo">Todos</h2>';
+        echo '<h2 class="rm-titulo">';
+        \Elementor\Icons_Manager::render_icon($settings['icon_titulo'], ['aria-hidden' => 'true']);
+        echo 'Todos</h2>';
         echo '<span class="rm-quantidade"></span>';
         echo '</div>';
         
@@ -407,11 +494,15 @@ class RM_Widget_Cards extends Widget_Base {
             echo '<div class="rm-card" data-cidades="' . esc_attr(implode(',', $cidades_ids)) . '">';
             
             if (!empty($settings['show_nome']) && $settings['show_nome'] === 'yes') {
-                echo '<h3 class="rm-nome">' . esc_html($rep->nome) . '</h3>';
+                echo '<h3 class="rm-nome">';
+                \Elementor\Icons_Manager::render_icon($settings['icon_nome'], ['aria-hidden' => 'true']);
+                echo esc_html($rep->nome) . '</h3>';
             }
 
             echo '<p class="rm-cidades" style="display:' . 
-            (!empty($settings['show_cidades']) && $settings['show_cidades'] === 'yes' ? 'block' : 'none') . '">' . esc_html(implode(', ', $cidades_nomes)) . '</p>';
+            (!empty($settings['show_cidades']) && $settings['show_cidades'] === 'yes' ? 'block' : 'none') . '">';
+            \Elementor\Icons_Manager::render_icon($settings['icon_cidades'], ['aria-hidden' => 'true']);
+            echo esc_html(implode(', ', $cidades_nomes)) . '</p>';
 
             $telefones = $wpdb->get_col($wpdb->prepare(
                 "SELECT telefone FROM {$wpdb->prefix}rm_telefones WHERE representante_id = %d",
@@ -421,7 +512,9 @@ class RM_Widget_Cards extends Widget_Base {
             if (!empty($settings['show_telefones']) && $settings['show_telefones'] === 'yes') {
                 if ($telefones) {
                     foreach ($telefones as $tel) {
-                        echo '<span class="rm-telefone">' . esc_html($tel) . '</span><br>';
+                        echo '<span class="rm-telefone">';
+                        \Elementor\Icons_Manager::render_icon($settings['icon_telefone'], ['aria-hidden' => 'true']);
+                        echo esc_html($tel) . '</span><br>';
                     }
                 }
             }
