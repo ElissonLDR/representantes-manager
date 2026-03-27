@@ -93,18 +93,26 @@ function rm_render_cidades_page() {
     if (isset($_GET['delete']) && isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'rm_delete_cidade')) {
 
         $id = intval($_GET['delete']);
-
+    
         $count = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $rel_table WHERE cidade_id = %d",
             $id
         ));
-
-        if ($count == 0) {
+    
+        if ($count > 0) {
+    
+            echo '<div class="notice notice-error"><p>Não é possível excluir: essa cidade possui ' . intval($count) . ' representante(s) vinculados.</p></div>';
+    
+        } else {
+    
             $wpdb->delete($table, ['id' => $id]);
+            
+            echo '<script>
+            alert("Cidade excluída com sucesso.");
+            window.location.href = "' . admin_url('admin.php?page=rm-cidades') . '";
+            </script>';
+            exit;
         }
-
-        echo '<script>window.location.href="' . admin_url('admin.php?page=rm-cidades') . '";</script>';
-        exit;
     }
 
     // EDIT MODE

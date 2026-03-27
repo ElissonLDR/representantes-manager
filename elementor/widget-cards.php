@@ -77,6 +77,38 @@ class RM_Widget_Cards extends Widget_Base {
     
         $this->end_controls_section();
     
+        /* ======================================================
+        =============== ESTILO - TÍTULO CONTEÚDO ================
+        ====================================================== */
+
+        $this->start_controls_section(
+            'section_titulo',
+            [
+                'label' => 'Título Conteúdo',
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'titulo_typo',
+                'selector' => '{{WRAPPER}} .rm-titulo',
+            ]
+        );
+
+        $this->add_control(
+            'titulo_cor',
+            [
+                'label' => 'Cor do Título',
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .rm-titulo' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     
         /* ======================================================
         =============== ESTILO - CARD ===========================
@@ -352,7 +384,7 @@ class RM_Widget_Cards extends Widget_Base {
 
         if (!$representantes) return;
 
-        echo '<div class="rm-header">';
+        echo '<div class="rm-header" style="display:flex;align-items:center;gap:16px">';
         echo '<h2 class="rm-titulo">Todos</h2>';
         echo '<span class="rm-quantidade"></span>';
         echo '</div>';
@@ -414,4 +446,3 @@ class RM_Widget_Cards extends Widget_Base {
         echo '</div>';
     }
 }
-

@@ -70,17 +70,17 @@ document.addEventListener("click", function(e){
 
         if(id === "all"){
             document.querySelectorAll(".rm-card").forEach(c => c.style.display = "block");
-        }
+        } else {
+            document.querySelectorAll(".rm-card").forEach(card => {
+                const cidades = card.dataset.cidades.split(',');
 
-        document.querySelectorAll(".rm-card").forEach(card => {
-            const cidades = card.dataset.cidades.split(',');
-
-            if(cidades.includes(id)){
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
-        });
+                if(cidades.includes(id)){
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+         }
 
         const titulo = document.querySelector('.rm-titulo');
         const qtd = document.querySelector('.rm-quantidade');
@@ -88,9 +88,18 @@ document.addEventListener("click", function(e){
         const visiveis = [...document.querySelectorAll('.rm-card')]
             .filter(c => c.style.display !== 'none');
         
-        const cidadeNome = item.querySelector('.rm-cidade').innerText;
-        
-        titulo.innerText = cidadeNome;
+            const cidadeEl = item.querySelector('.rm-cidade');
+            const estadoEl = item.querySelector('.rm-estado');
+            
+            const cidadeNome = cidadeEl ? cidadeEl.innerText : '';
+            const estadoNome = estadoEl ? estadoEl.innerText : '';
+            
+            if(id === "all"){
+                titulo.innerText = "Todos";
+            } else {
+                titulo.innerText = `${cidadeNome}${estadoNome}`;
+            }
+
         qtd.innerText = `(${visiveis.length})`;
     }
 
