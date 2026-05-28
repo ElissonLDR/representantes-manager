@@ -2,39 +2,39 @@
 
 Plugin WordPress para gerenciamento de representantes e cidades com relacionamento múltiplo.
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 - Cadastro de cidades
 - Cadastro de representantes
 - Relacionamento many-to-many (representante ↔ cidades)
+- Múltiplos telefones por representante
 - Edição e exclusão com validação
-- Interface administrativa simples (estilo WordPress)
-- Widgets Elementor:
-  - Listagem de representantes
-  - Sidebar de cidades
-  - Busca por nome ou cidade
+- Permissão própria (`manage_representantes`) integrada ao plugin **Members**
+- Widgets Elementor: listagem, sidebar de cidades e busca
 
-## 🧱 Estrutura
+## Instalação
 
-- `cidades` → lista de cidades
-- `representantes` → dados dos vendedores
-- `representantes_cidades` → relacionamento
-
-## ⚙️ Instalação
-
-1. Envie o plugin para `/wp-content/plugins/`
+1. Envie a pasta do plugin para `/wp-content/plugins/representantes-manager/`
 2. Ative no WordPress
-3. As tabelas serão criadas automaticamente
+3. As tabelas são criadas/atualizadas automaticamente
 
-## 📌 Uso
+> No servidor Vicato o plugin fica na pasta `representantes-manager`. Ao gerar ZIP para upload, use essa pasta como raiz do arquivo.
 
-- Acesse o menu **Representantes**
-- Cadastre cidades
-- Cadastre representantes e vincule às cidades
+## Members (permissões)
+
+1. Ative o plugin **Members**
+2. Vá em **Usuários → Funções** e edite a função desejada
+3. No grupo **Representantes Manager**, marque **Gerenciar representantes e cidades**
+
+## Uso
+
+- Menu **Representantes** no admin
+- Cadastre cidades e representantes
 - Use os widgets no Elementor
 
-## 🔒 Segurança
+## Changelog
 
-- Sanitização de dados
-- Nonce em ações críticas
-- Proteção contra duplicidade no relacionamento
+### 1.0.2
+- Capability `manage_representantes` e integração com Members
+- Correção de ativação e upgrade automático do banco (tabela de telefones)
+- Carregamento admin/Elementor mais seguro

@@ -11,6 +11,7 @@ function rm_install() {
     $table_cidades = $wpdb->prefix . 'rm_cidades';
     $table_representantes = $wpdb->prefix . 'rm_representantes';
     $table_rel = $wpdb->prefix . 'rm_representantes_cidades';
+    $table_telefones = $wpdb->prefix . 'rm_telefones';
 
     // CIDADES
     $sql_cidades = "CREATE TABLE $table_cidades (
@@ -40,7 +41,16 @@ function rm_install() {
         UNIQUE KEY unique_rel (representante_id, cidade_id)
     ) $charset_collate;";
 
+    $sql_telefones = "CREATE TABLE $table_telefones (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        representante_id BIGINT UNSIGNED NOT NULL,
+        telefone VARCHAR(20) NOT NULL,
+        PRIMARY KEY (id),
+        KEY representante_id (representante_id)
+    ) $charset_collate;";
+
     dbDelta($sql_cidades);
     dbDelta($sql_representantes);
     dbDelta($sql_rel);
+    dbDelta($sql_telefones);
 }

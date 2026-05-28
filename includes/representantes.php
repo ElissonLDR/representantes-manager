@@ -2,11 +2,32 @@
 if (!defined('ABSPATH')) exit;
 
 require_once RM_PATH . 'includes/db.php';
-require_once RM_PATH . 'elementor/widgets.php';
+
+function rm_sort_link($label, $column, $current_order_by, $current_order) {
+    $is_active = $current_order_by === $column;
+    $new_order = ($is_active && $current_order === 'ASC') ? 'DESC' : 'ASC';
+
+    $url = add_query_arg([
+        'page'    => 'rm-representantes',
+        'orderby' => $column,
+        'order'   => $new_order,
+    ], admin_url('admin.php'));
+
+    $icon = '⇅';
+
+    if ($is_active) {
+        $icon = $current_order === 'ASC' ? '↑' : '↓';
+    }
+
+    return '<a href="' . esc_url($url) . '" style="display:flex;align-items:center;gap:5px;">'
+        . esc_html($label) . ' <span style="font-size:10px;">' . $icon . '</span></a>';
+}
 
 function rm_render_representantes_page() {
 
-    if (!current_user_can('manage_options')) return;
+    if (!rm_user_can_manage()) {
+        wp_die(__('Sem permissão para acessar esta página.', 'representantes-manager'), 403);
+    }
 
     global $wpdb;
 
@@ -355,29 +376,6 @@ function rm_render_representantes_page() {
     echo '<table class="widefat striped">';
     echo '<thead><tr>';
 
-    function rm_sort_link($label, $column, $current_order_by, $current_order){
-
-        $is_active = $current_order_by === $column;
-        $new_order = ($is_active && $current_order === 'ASC') ? 'DESC' : 'ASC';
-    
-        $url = add_query_arg([
-            'page' => 'rm-representantes',
-            'orderby' => $column,
-            'order' => $new_order
-        ], admin_url('admin.php'));
-    
-        // Ícones estilo WP
-        $icon = '⇅'; // padrão
-    
-        if ($is_active) {
-            $icon = $current_order === 'ASC' ? '↑' : '↓';
-        }
-    
-        return '<a href="'.$url.'" style="display:flex;align-items:center;gap:5px;">
-            '.$label.' <span style="font-size:10px;">'.$icon.'</span>
-        </a>';
-    }
-    
     echo '<th>'.rm_sort_link('Nome', 'nome', $order_by, $order).'</th>';
     echo '<th>Telefones</th>';
     echo '<th>'.rm_sort_link('Email', 'email', $order_by, $order).'</th>';

@@ -5,7 +5,9 @@ require_once RM_PATH . 'includes/db.php';
 
 function rm_render_cidades_page() {
 
-    if (!current_user_can('manage_options')) return;
+    if (!rm_user_can_manage()) {
+        wp_die(__('Sem permissão para acessar esta página.', 'representantes-manager'), 403);
+    }
 
     global $wpdb;
     $table = rm_get_table('cidades');
